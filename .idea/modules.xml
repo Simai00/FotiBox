@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/FotiBox.iml" filepath="$PROJECT_DIR$/.idea/FotiBox.iml" />
+      <module fileurl="file://C:/xampp/htdocs/responsiv/.idea/responsiv.iml" filepath="C:/xampp/htdocs/responsiv/.idea/responsiv.iml" />
     </modules>
   </component>
 </project>
