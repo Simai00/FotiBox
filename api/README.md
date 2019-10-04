@@ -17,18 +17,15 @@
 #### GET /images
     [
       {
-        "imageId": 1,
-        "url": "http://localhost:8080/v1/image/1",
+        "id": 1,
         "createdAt": "2019-10-04 14:13:38"
       },
       {
-        "imageId": 2,
-        "url": "http://localhost:8080/v1/image/2",
+        "id": 2,
         "createdAt": "2019-10-04 14:13:38"
       },
       {
-        "imageId": 3,
-        "url": "http://localhost:8080/v1/image/3",
+        "id": 3,
         "createdAt": "2019-10-04 14:13:38"
       }
     ]
