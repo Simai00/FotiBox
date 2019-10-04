@@ -5,6 +5,8 @@
 ## Routes
 #### GET /image/_{id}_
     Returns image resource 
+#### GET /image/test
+    Returns a test image (works already)    
 #### DELETE /image/_{id}_
 #### GET /camera/capture/image
     {
