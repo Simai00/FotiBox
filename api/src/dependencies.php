@@ -1,6 +1,7 @@
 <?php
 
 use fotiBox\Models\Gallery;
+use fotiBox\Services\ImageService;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
@@ -37,4 +38,8 @@ $container['database'] = function (ContainerInterface $container) {
 
 $container['gallery'] = function (ContainerInterface $container) {
     return new Gallery($container);
+};
+
+$container['imageService'] = function (ContainerInterface $container) {
+    return new ImageService($container);
 };
