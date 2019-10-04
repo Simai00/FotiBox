@@ -1,6 +1,9 @@
 # API
 
 ## Routes
-- /image/_id_
-- /image/_capture_
-- /image/list
+- GET /image/_{id}_
+- POST /image/_{id}_
+- DELETE /image/_{id}_
+- GET /camera/capture/image
+- GET /camera/status
+- GET /images

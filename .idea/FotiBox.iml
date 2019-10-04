@@ -2,22 +2,22 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/api/src/fotiBox" isTestSource="false" packagePrefix="fotiBox\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/container-interop/container-interop" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/davidepastore/slim-validation" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/instantiator" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/fig/http-message-util" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/jeremeamia/superclosure" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/firebase/php-jwt" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/nikic/fast-route" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phar-io/version" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-di/invoker" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-di/php-di" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-di/phpdoc-reader" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/php-console/php-console" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpoption/phpoption" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-file-iterator" />
@@ -25,13 +25,14 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/pimple/pimple" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-factory" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-handler" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-middleware" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/log" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/respect/validation" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/comparator" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/diff" />
@@ -43,12 +44,14 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/resource-operations" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/version" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/slim/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/slim/slim" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-ctype" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-php56" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-util" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/tuupola/callable-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/tuupola/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/tuupola/slim-jwt-auth" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/webmozart/assert" />
     </content>
     <orderEntry type="inheritedJdk" />
