@@ -1,5 +1,6 @@
 <?php
 
+use fotiBox\Models\Camera;
 use fotiBox\Models\Gallery;
 use fotiBox\Services\ImageService;
 use Monolog\Handler\StreamHandler;
@@ -38,6 +39,10 @@ $container['database'] = function (ContainerInterface $container) {
 
 $container['gallery'] = function (ContainerInterface $container) {
     return new Gallery($container);
+};
+
+$container['camera'] = function (ContainerInterface $container) {
+    return new Camera($container);
 };
 
 $container['imageService'] = function (ContainerInterface $container) {
