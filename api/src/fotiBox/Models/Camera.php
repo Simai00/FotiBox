@@ -3,6 +3,8 @@
 namespace fotiBox\Models;
 
 use Psr\Container\ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 class Camera
 {
@@ -13,9 +15,10 @@ class Camera
         $this->logger = $container->get('logger');
     }
 
-    public function captureImage() {
+    public function captureImage(Request $request, Response $response, $args): Response {
         $path = __DIR__ . "../../image/";
         $cmd = "gphoto2 --capture-image-and-download --filename ${$path}DSC%H%M%S.%C";
-        exec($cmd);
+        exec($cmd, $out);
+        return $response->write($out);
     }
 }
