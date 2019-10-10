@@ -19,7 +19,7 @@ class Camera
         $path = __DIR__ . "/../../image/";
         $cmd = "gphoto2 --capture-image-and-download --filename DSC%H%M%S.%C";
         exec($cmd, $out);
-        $this->logger->error($out);
+        $this->logger->error(var_dump($out));
         return $response->write("Image Captured");
     }
 }
