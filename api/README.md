@@ -11,7 +11,7 @@
 #### GET /camera/capture/image
     {
       "imageId": 1,
-      "url": "http://localhost:8080/v1/image/1"
+      "createdAt": "2019-10-04 14:13:38"
     }
 #### GET /camera/status
 #### GET /images
