@@ -40,6 +40,10 @@
       "semi": [
         2,
         "always"
+      ],
+      "indent": [
+        "warning",
+        4
       ]
     },
     "parserOptions": {
