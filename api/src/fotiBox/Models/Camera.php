@@ -17,7 +17,7 @@ class Camera
 
     public function captureImage(Request $request, Response $response, $args): Response {
         $path = __DIR__ . "/../../image/";
-        $cmd = "gphoto2 --capture-image-and-download --filename DSC%H%M%S.%C";
+        $cmd = "gphoto2 --capture-image-and-download --filename ${$path}DSC%H%M%S.%C";
         exec($cmd, $out);
         $this->logger->error(var_dump($out));
         return $response->write("Image Captured");
