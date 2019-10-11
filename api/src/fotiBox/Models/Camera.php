@@ -9,17 +9,18 @@ use Slim\Http\Response;
 class Camera
 {
     private $logger;
+    private $imageService;
 
     public function __construct(ContainerInterface $container)
     {
         $this->logger = $container->get('logger');
+        $this->imageService = $container->get('imageService');
     }
 
     public function captureImage(Request $request, Response $response, $args): Response {
-        $path = __DIR__ . "/../../image/";
-        $cmd = "gphoto2 --capture-image-and-download --filename ${$path}DSC%H%M%S.%C";
-        exec($cmd, $out);
-        $this->logger->error(var_dump($out));
-        return $response->write("Image Captured");
+        $path = __DIR__ . "/../../image/"; // TODO: Add date folder
+        exec("gphoto2 --capture-image-and-download --filename " . $path . "DSC%H%M%S.%C"); // DSCStundeMinuteSekundeMillisekunde.%C
+        // TODO: Insert Image into DB (create function in ImageService.php)
+        return $response->write("Image Captured"); // TODO: return as defined in /api/README.md
     }
 }
