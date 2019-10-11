@@ -42,7 +42,7 @@
         "always"
       ],
       "indent": [
-        "warning",
+        1,
         4
       ]
     },
