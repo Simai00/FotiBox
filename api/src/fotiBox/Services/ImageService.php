@@ -43,5 +43,14 @@ SQL;
 
         return $stmt->fetchAll();
     }
+
+    public function insertImageInDB()
+    {
+        $sql = <<< SQL
+#             INSERT INTO image (path, createdAt, )
+# values in db unknown
+SQL;
+
+    }
 }
 
