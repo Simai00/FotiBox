@@ -3,6 +3,7 @@
 
 namespace fotiBox\Services;
 
+use MongoDB\BSON\Timestamp;
 use Psr\Container\ContainerInterface;
 use PDO;
 
@@ -44,13 +45,31 @@ SQL;
         return $stmt->fetchAll();
     }
 
-    public function insertImageInDB()
+    public function insertImageInDB(String $imagePath)
     {
         $sql = <<< SQL
-#             INSERT INTO image (path, createdAt, )
-# values in db unknown
-SQL;
+            INSERT INTO image (path) VALUES (:path);
 
+SQL;
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':path', $imagePath);
+        $stmt->execute();
+
+        return true;
+    }
+
+    public function getImageByPath(String $imagePath)
+    {
+        $sql = <<< SQL
+            SELECT id FROM image WHERE path= :path;
+
+SQL;
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':path', $imagePath);
+        $stmt->execute();
+
+        $result = $stmt->fetch();
+        return $result['id'];
     }
 }
 
