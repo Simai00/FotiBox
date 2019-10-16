@@ -8,6 +8,7 @@ use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\WebProcessor;
 use Psr\Container\ContainerInterface;
+use function Tinify\setKey;
 
 $container = $app->getContainer();
 
@@ -27,6 +28,8 @@ $container['logger'] = function (ContainerInterface $container) {
 
     return $logger;
 };
+
+setKey("2PYxtNcc8XC80J3Nj6vykdBqpq35wPvm");
 
 // Database
 $container['database'] = function (ContainerInterface $container) {

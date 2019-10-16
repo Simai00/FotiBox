@@ -4,12 +4,14 @@
 namespace fotiBox\Services;
 
 use Psr\Container\ContainerInterface;
+use function Tinify\fromFile;
 
 class ImageService
 {
 
     private $db;
     private $logger;
+    protected $rootPath = __DIR__ . "/../../../";
     protected $imagePath = "images/";
 
     public function __construct(ContainerInterface $container)
@@ -72,7 +74,7 @@ SQL;
 
     public function getImage(String $id, String $quality)
     {
-        $path = __DIR__ . "/../../../" . $this->imagePath;
+        $path = $this->rootPath . $this->imagePath;
         switch ($quality) {
             case "original":
                 $path .= "original/";
@@ -85,6 +87,23 @@ SQL;
         }
         $path .= $this->getImagePath($id);
         return file_get_contents($path);
+    }
+
+    public function generateImages(String $path, String $fileName)
+    {
+        $original = fromFile($path . $fileName);
+        $preview = $original->resize(array(
+            "method" => "cover",
+            "width" => 150,
+            "height" => 150
+        ));
+        $preview->toFile($this->rootPath . $this->imagePath . "preview/" . $fileName);
+
+        $medium = $original->resize(array(
+            "method" => "scale",
+            "width" => 1080
+        ));
+        $medium->toFile($this->rootPath . $this->imagePath . "medium/" . $fileName);
     }
 }
 
