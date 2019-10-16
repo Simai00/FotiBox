@@ -16,8 +16,9 @@ $app->get('/', function (Request $request, Response $response): Response {
 
 $app->group('/v1', function () use ($container) {
     $this->group('/image', function () use ($container) {
-        $this->get('/test', Gallery::class . ':getTestImage');
-        $this->get('/{id}', Gallery::class . ':getImage');
+        $this->get('/{id}/original', Gallery::class . ':getOriginalImage');
+        $this->get('/{id}/preview', Gallery::class . ':getPreviewImage');
+        $this->get('/{id}/middle', Gallery::class . ':getMiddleImage');
     });
     $this->get('/images', Gallery::class . ':getImages');
     $this->group('/camera', function () use ($container) {

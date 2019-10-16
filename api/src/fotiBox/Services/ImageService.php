@@ -10,6 +10,7 @@ class ImageService
 
     private $db;
     private $logger;
+    protected $imagePath = "images/";
 
     public function __construct(ContainerInterface $container)
     {
@@ -17,7 +18,7 @@ class ImageService
         $this->logger = $container->get('logger');
     }
 
-    public function getImagePath(int $imageId): String
+    public function getImagePath(int $imageId)
     {
         $sql = <<< SQL
             SELECT path from image where id = :imageId
@@ -27,8 +28,8 @@ SQL;
         $stmt->bindValue(':imageId', $imageId);
         $stmt->execute();
 
-        $bla = $stmt->fetch();
-        return $bla['path'];
+        $result = $stmt->fetch();
+        return $result['path'];
     }
 
     public function getAllImages()
@@ -56,7 +57,7 @@ SQL;
         return $this->db->lastInsertId();
     }
 
-    public function getImage(String $imageId)
+    public function getOneImage(String $imageId)
     {
         $sql = <<< SQL
             SELECT id, createdAt FROM image WHERE id= :id;
@@ -67,6 +68,23 @@ SQL;
         $stmt->execute();
 
         return $stmt->fetch();
+    }
+
+    public function getImage(String $id, String $quality)
+    {
+        $path = __DIR__ . "/../../../" . $this->imagePath;
+        switch ($quality) {
+            case "original":
+                $path .= "original/";
+                break;
+            case "preview":
+                $path .= "preview/";
+                break;
+            default:
+                $path .= "medium/";
+        }
+        $path .= $this->getImagePath($id);
+        return file_get_contents($path);
     }
 }
 

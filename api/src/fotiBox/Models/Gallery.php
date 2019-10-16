@@ -17,16 +17,21 @@ class Gallery
         $this->imageService = $container->get('imageService');
     }
 
-    public function getTestImage(Request $request, Response $response, $args): Response
+    public function getOriginalImage(Request $request, Response $response, $args): Response
     {
-        $response->getBody()->write(file_get_contents(__DIR__ . "/../../image/test.jpg"));
+        $response->getBody()->write($this->imageService->getImage($args['id'], "original"));
         return $response->withHeader("Content-Type", "image/jpg");
     }
 
-    public function getImage(Request $request, Response $response, $args): Response
+    public function getMediumImage(Request $request, Response $response, $args): Response
     {
-        $path = $this->imageService->getImagePath($args['id']);
-        $response->getBody()->write(file_get_contents(__DIR__ . "/../../image/" . $path));
+        $response->getBody()->write($this->imageService->getImage($args['id'], "medium"));
+        return $response->withHeader("Content-Type", "image/jpg");
+    }
+
+    public function getPreviewImage(Request $request, Response $response, $args): Response
+    {
+        $response->getBody()->write($this->imageService->getImage($args['id'], "preview"));
         return $response->withHeader("Content-Type", "image/jpg");
     }
 

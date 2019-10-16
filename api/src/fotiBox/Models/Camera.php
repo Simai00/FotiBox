@@ -18,13 +18,14 @@ class Camera
         $this->imageService = $container->get('imageService');
     }
 
-    public function captureImage(Request $request, Response $response, $args): Response {
+    public function captureImage(Request $request, Response $response, $args): Response
+    {
         $path = __DIR__ . "/../../../" . $this->imagePath . "/original/";
         $file = "DSC" . date("YmdHis") . ".jpg";
         exec("gphoto2 --capture-image-and-download --filename " . $path . $file);
 
         $imageId = $this->imageService->insertImageInDB($file);
 
-        return $response->withJson($this->imageService->getImage($imageId));
+        return $response->withJson($this->imageService->getOneImage($imageId));
     }
 }
