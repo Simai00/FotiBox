@@ -3,9 +3,7 @@
 
 namespace fotiBox\Services;
 
-use MongoDB\BSON\Timestamp;
 use Psr\Container\ContainerInterface;
-use PDO;
 
 class ImageService
 {
@@ -55,21 +53,20 @@ SQL;
         $stmt->bindValue(':path', $imagePath);
         $stmt->execute();
 
-        return true;
+        return $this->db->lastInsertId();
     }
 
-    public function getImageByPath(String $imagePath)
+    public function getImage(String $imageId)
     {
         $sql = <<< SQL
-            SELECT id FROM image WHERE path= :path;
+            SELECT id, createdAt FROM image WHERE id= :id;
 
 SQL;
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':path', $imagePath);
+        $stmt->bindValue(':id', $imageId);
         $stmt->execute();
 
-        $result = $stmt->fetch();
-        return $result['id'];
+        return $stmt->fetch();
     }
 }
 

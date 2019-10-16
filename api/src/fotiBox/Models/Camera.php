@@ -10,6 +10,7 @@ class Camera
 {
     private $logger;
     private $imageService;
+    protected $imagePath = "images";
 
     public function __construct(ContainerInterface $container)
     {
@@ -18,12 +19,12 @@ class Camera
     }
 
     public function captureImage(Request $request, Response $response, $args): Response {
-        $path = __DIR__ . "/../../image/"; // TODO: Add date folder
-        exec("gphoto2 --capture-image-and-download --filename " . $path . "DSC%H%M%S.%C"); // DSCStundeMinuteSekundeMillisekunde.%C
-        // TODO: Insert Image into DB (create function in ImageService.php)
-        $this->imageService->insertImageInDB($path);
-        $id = $this->imageService->getImageByPath($path);
-        return $response->write("Image Captured"); // TODO: return as defined in /api/README.md
-        //return image id fehlt
+        $path = __DIR__ . "/../../../" . $this->imagePath . "/original/";
+        $file = "DSC" . date("YmdHis") . ".jpg";
+        exec("gphoto2 --capture-image-and-download --filename " . $path . $file);
+
+        $imageId = $this->imageService->insertImageInDB($file);
+
+        return $response->withJson($this->imageService->getImage($imageId));
     }
 }
