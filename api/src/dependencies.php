@@ -9,6 +9,7 @@ use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\WebProcessor;
 use Psr\Container\ContainerInterface;
 use function Tinify\setKey;
+use function Tinify\validate;
 
 $container = $app->getContainer();
 
@@ -29,7 +30,12 @@ $container['logger'] = function (ContainerInterface $container) {
     return $logger;
 };
 
-setKey("2PYxtNcc8XC80J3Nj6vykdBqpq35wPvm");
+try {
+    setKey("2PYxtNcc8XC80J3Nj6vykdBqpq35wPvm");
+    validate();
+} catch (\Tinify\Exception $e) {
+    $container['logger']->error("Tinify validation failed");
+}
 
 // Database
 $container['database'] = function (ContainerInterface $container) {

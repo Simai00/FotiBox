@@ -4,6 +4,10 @@
 namespace fotiBox\Services;
 
 use Psr\Container\ContainerInterface;
+use Tinify\AccountException;
+use Tinify\ClientException;
+use Tinify\ConnectionException;
+use Tinify\ServerException;
 use function Tinify\fromFile;
 
 class ImageService
@@ -91,19 +95,36 @@ SQL;
 
     public function generateImages(String $path, String $fileName)
     {
-        $original = fromFile($path . $fileName);
-        $preview = $original->resize(array(
-            "method" => "cover",
-            "width" => 150,
-            "height" => 150
-        ));
-        $preview->toFile($this->rootPath . $this->imagePath . "preview/" . $fileName);
+        try {
+            $original = fromFile($path . $fileName);
+            $preview = $original->resize(array(
+                "method" => "cover",
+                "width" => 150,
+                "height" => 150
+            ));
+            $preview->toFile($this->rootPath . $this->imagePath . "preview/" . $fileName);
 
-        $medium = $original->resize(array(
-            "method" => "scale",
-            "width" => 1080
-        ));
-        $medium->toFile($this->rootPath . $this->imagePath . "medium/" . $fileName);
+            $medium = $original->resize(array(
+                "method" => "scale",
+                "width" => 1080
+            ));
+            $medium->toFile($this->rootPath . $this->imagePath . "medium/" . $fileName);
+        } catch (AccountException $e) {
+            $this->logger->error("The error message is: " . $e->getMessage());
+            // Verify your API key and account limit.
+        } catch (ClientException $e) {
+            $this->logger->error("Source image and request options");
+            // Check your source image and request options.
+        } catch (ServerException $e) {
+            $this->logger->error("Temp issue with Tinify API");
+            // Temporary issue with the Tinify API.
+        } catch (ConnectionException $e) {
+            $this->logger->error("Network error");
+            // A network connection error occurred.
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage());
+            // Something else went wrong, unrelated to the Tinify API.
+        }
     }
 }
 
