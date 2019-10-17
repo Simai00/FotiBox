@@ -30,13 +30,6 @@ $container['logger'] = function (ContainerInterface $container) {
     return $logger;
 };
 
-try {
-    setKey("2PYxtNcc8XC80J3Nj6vykdBqpq35wPvm");
-    validate();
-} catch (\Tinify\Exception $e) {
-    $container['logger']->error("Tinify validation failed");
-}
-
 // Database
 $container['database'] = function (ContainerInterface $container) {
     $config = $container->get('settings')['database'];
