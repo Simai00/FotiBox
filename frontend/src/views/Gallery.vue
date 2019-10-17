@@ -2,15 +2,15 @@
     <v-container fluid>
         <v-row>
             <v-col
-                :key="n"
+                :key="image.id"
                 class="d-flex child-flex"
                 cols="4"
-                v-for="n in 9"
+                v-for="image in images"
             >
                 <v-card class="d-flex" flat tile>
                     <v-img
-                        :lazy-src="`http://localhost:8080/v1/image/24/preview`"
-                        :src="`http://localhost:8080/v1/image/24/medium`"
+                        :lazy-src="`${apiUrl}/v1/image/${image.id}/preview`"
+                        :src="`${apiUrl}/v1/image/${image.id}/medium`"
                         aspect-ratio="1"
                         class="grey lighten-2"
                     >
@@ -31,9 +31,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'Gallery'
-  };
+    import Vue from 'vue';
+    export default {
+        name: 'Gallery',
+        data: function () {
+            return {
+                images: [],
+                apiUrl: process.env.VUE_APP_apiUrl
+            };
+        },
+        mounted () {
+            Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
+                this.images = response.data;
+            });
+        }
+    };
 </script>
 
 <style scoped>

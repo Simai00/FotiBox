@@ -1,19 +1,14 @@
 <template>
     <v-app>
         <v-app-bar app>
-            <v-toolbar-title class="headline text-uppercase">
-                <span>Foti</span>
-                <span class="font-weight-light">Box</span>
-            </v-toolbar-title>
+            <router-link to="/" class="toolbar-title">
+                <v-toolbar-title class="headline text-uppercase">
+                    <span>Foti</span>
+                    <span class="font-weight-light">Box</span>
+                </v-toolbar-title>
+            </router-link>
             <v-spacer></v-spacer>
-<!--            <v-btn-->
-<!--                href="https://github.com/vuetifyjs/vuetify/releases/latest"-->
-<!--                target="_blank"-->
-<!--                text-->
-<!--            >-->
-<!--                <span class="mr-2">Latest Release</span>-->
-<!--                <v-icon>mdi-open-in-new</v-icon>-->
-<!--            </v-btn>-->
+            <v-btn to="gallery">Galerie</v-btn>
         </v-app-bar>
 
         <v-content>
@@ -24,10 +19,17 @@
 
 <script>
 
-  export default {
-    name: 'App',
-    data: () => ({
-      //
-    }),
-  };
+    export default {
+        name: 'App',
+        data: () => ({
+            //
+        }),
+    };
 </script>
+
+<style>
+    .toolbar-title {
+        text-decoration: none !important;
+        color: black !important;
+    }
+</style>
