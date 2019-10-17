@@ -12,7 +12,7 @@ class Camera
     private $imageService;
     protected $rootPath = __DIR__ . "/../../../";
     protected $imagePath = "images";
-    protected $simulateCamera = true;
+    protected $simulateCamera = false;
     protected $testImage = "images/test.jpg";
 
     public function __construct(ContainerInterface $container)
