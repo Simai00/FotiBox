@@ -31,6 +31,10 @@ class Camera
             exec("gphoto2 --capture-image-and-download --filename " . $path . $file);
         }
 
+        if (!file_exists($path . $file)) {
+            return $response->write("Error");
+        }
+
         $imageId = $this->imageService->insertImageInDB($file);
 
         $this->imageService->generateImages($path, $file);
