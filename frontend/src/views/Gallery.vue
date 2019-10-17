@@ -9,8 +9,8 @@
             >
                 <v-card class="d-flex" flat tile>
                     <v-img
-                        :lazy-src="`http://localhost:8080/v1/image/test`"
-                        :src="`http://localhost:8080/v1/image/test`"
+                        :lazy-src="`http://localhost:8080/v1/image/24/preview`"
+                        :src="`http://localhost:8080/v1/image/24/medium`"
                         aspect-ratio="1"
                         class="grey lighten-2"
                     >
