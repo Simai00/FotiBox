@@ -28,11 +28,11 @@ class Camera
         if ($this->simulateCamera) {
             copy($this->rootPath . $this->testImage, $path . $file);
         } else {
-            exec("gphoto2 --capture-image-and-download --filename " . $path . $file);
+            exec("gphoto2 --capture-image-and-download --filename " . $path . $file, $output);
         }
 
         if (!file_exists($path . $file)) {
-            return $response->write("Error");
+            return $response->withJson($output);
         }
 
         $imageId = $this->imageService->insertImageInDB($file);
