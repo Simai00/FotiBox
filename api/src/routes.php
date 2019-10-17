@@ -25,5 +25,6 @@ $app->group('/v1', function () use ($container) {
         $this->group('/capture', function () use ($container) {
             $this->get('/image', Camera::class . ':captureImage');
         });
+        $this->get('/status', Camera::class . ":status");
     });
 });

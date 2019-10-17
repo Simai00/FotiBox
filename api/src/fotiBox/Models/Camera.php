@@ -12,7 +12,7 @@ class Camera
     private $imageService;
     protected $rootPath = __DIR__ . "/../../../";
     protected $imagePath = "images";
-    protected $simulateCamera = false;
+    protected $simulateCamera = true;
     protected $testImage = "images/test.jpg";
 
     public function __construct(ContainerInterface $container)
@@ -36,5 +36,14 @@ class Camera
         $this->imageService->generateImages($path, $file);
 
         return $response->withJson($this->imageService->getOneImage($imageId));
+    }
+
+    public function status(Request $request, Response $response, $args): Response
+    {
+        $infos = array(
+            "name" => "Sony Alpha 7ii",
+            "status" => "online"
+        );
+        return $response->withJson($infos);
     }
 }

@@ -10,7 +10,6 @@
             <v-spacer></v-spacer>
             <v-btn to="gallery">Galerie</v-btn>
         </v-app-bar>
-
         <v-content>
             <router-view/>
         </v-content>
