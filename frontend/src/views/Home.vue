@@ -9,6 +9,17 @@
         <v-chip :color="getCameraStatusColor()" text-color="white" v-if="cameraStatus">
             {{getCameraStatusText()}}
         </v-chip>
+
+        <v-overlay :value="processingOverlay">
+            <v-progress-circular indeterminate size="64"/>
+        </v-overlay>
+        <v-overlay :value="imageOverlay">
+            <v-img
+                :lazy-src="`${apiUrl}/v1/image/2/preview`"
+                :src="`${apiUrl}/v1/image/2/medium`"
+                contain
+            ></v-img>
+        </v-overlay>
     </div>
 </template>
 <script>
@@ -17,14 +28,20 @@
     export default {
         data: function () {
             return {
+                apiUrl: process.env.VUE_APP_apiUrl,
                 countDown: Number,
                 countDownStarted: false,
                 cameraName: 'Sony Alpha 7ii',
                 cameraStatus: 'online',
-                autoReloadCameraStatus: true
+                autoReloadCameraStatus: true,
+                processingOverlay: false,
+                imageOverlay: true
             };
         },
         methods: {
+            captureImage () {
+                this.processingOverlay = true;
+            },
             startCountDown () {
                 if (!this.countDownStarted) {
                     this.countDown = 5;
@@ -40,6 +57,7 @@
                     }, 1000);
                 } else {
                     this.countDownStarted = false;
+                    this.captureImage();
                 }
             },
             getCameraStatus () {
