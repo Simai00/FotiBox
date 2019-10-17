@@ -8,7 +8,7 @@
     "vlucas/phpdotenv": "^3.3.3",
     "ext-json": "*",
     "php-console/php-console": "^3.1",
-    "tinify/tinify": "^1.5"
+    "ext-gd": "*"
   },
   "autoload": {
     "psr-4": {

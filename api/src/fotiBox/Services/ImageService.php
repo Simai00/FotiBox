@@ -95,36 +95,34 @@ SQL;
 
     public function generateImages(String $path, String $fileName)
     {
-        try {
-            $original = fromFile($path . $fileName);
-            $preview = $original->resize(array(
-                "method" => "cover",
-                "width" => 150,
-                "height" => 150
-            ));
-            $preview->toFile($this->rootPath . $this->imagePath . "preview/" . $fileName);
+        $originalImage = imagecreatefromjpeg($path . $fileName);
+        $originalWidth = imagesx($originalImage);
+        $originalHeight = imagesy($originalImage);
+        $mediumWidth = 1920;
+        $mediumHeight = intval($originalHeight * $mediumWidth / $originalWidth);
+        $mediumImage = imagecreatetruecolor($mediumWidth, $mediumHeight);
+        imagecopyresized(
+            $mediumImage,
+            $originalImage,
+            0, 0, 0, 0,
+            $mediumWidth, $mediumHeight, $originalWidth, $originalHeight
+        );
+        $mediumImagePath = $this->rootPath . $this->imagePath . "medium/" . $fileName;
+        imagejpeg($mediumImage, $mediumImagePath, 80);
+        imagedestroy($originalImage);
 
-            $medium = $original->resize(array(
-                "method" => "scale",
-                "width" => 1080
-            ));
-            $medium->toFile($this->rootPath . $this->imagePath . "medium/" . $fileName);
-        } catch (AccountException $e) {
-            $this->logger->error("The error message is: " . $e->getMessage());
-            // Verify your API key and account limit.
-        } catch (ClientException $e) {
-            $this->logger->error("Source image and request options");
-            // Check your source image and request options.
-        } catch (ServerException $e) {
-            $this->logger->error("Temp issue with Tinify API");
-            // Temporary issue with the Tinify API.
-        } catch (ConnectionException $e) {
-            $this->logger->error("Network error");
-            // A network connection error occurred.
-        } catch (Exception $e) {
-            $this->logger->error($e->getMessage());
-            // Something else went wrong, unrelated to the Tinify API.
-        }
+        $previewWidth = 255;
+        $previewHeight = intval($mediumHeight * $previewWidth / $mediumWidth);
+        $previewImage = imagecreatetruecolor($previewWidth, $previewHeight);
+        imagecopyresized(
+            $previewImage,
+            $mediumImage,
+            0, 0, 0, 0,
+            $previewWidth, $previewHeight, $mediumWidth, $mediumHeight
+        );
+        imagejpeg($previewImage, $this->rootPath . $this->imagePath . "preview/" . $fileName, 50);
+        imagedestroy($mediumImage);
+        imagedestroy($previewImage);
     }
 }
 

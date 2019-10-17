@@ -10,7 +10,10 @@ class Camera
 {
     private $logger;
     private $imageService;
+    protected $rootPath = __DIR__ . "/../../../";
     protected $imagePath = "images";
+    protected $simulateCamera = false;
+    protected $testImage = "images/test.jpg";
 
     public function __construct(ContainerInterface $container)
     {
@@ -20,9 +23,13 @@ class Camera
 
     public function captureImage(Request $request, Response $response, $args): Response
     {
-        $path = __DIR__ . "/../../../" . $this->imagePath . "/original/";
+        $path = $this->rootPath . $this->imagePath . "/original/";
         $file = "DSC" . date("YmdHis") . ".jpg";
-        exec("gphoto2 --capture-image-and-download --filename " . $path . $file);
+        if ($this->simulateCamera) {
+            copy($this->rootPath . $this->testImage, $path . $file);
+        } else {
+            exec("gphoto2 --capture-image-and-download --filename " . $path . $file);
+        }
 
         $imageId = $this->imageService->insertImageInDB($file);
 

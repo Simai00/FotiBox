@@ -48,7 +48,6 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-ctype" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/theseer/tokenizer" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/tinify/tinify" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/tuupola/callable-handler" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/tuupola/http-factory" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/tuupola/slim-jwt-auth" />

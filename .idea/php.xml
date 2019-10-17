@@ -52,7 +52,6 @@
       <path value="$PROJECT_DIR$/api/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/api/vendor/pimple/pimple" />
       <path value="$PROJECT_DIR$/api/vendor/phpoption/phpoption" />
-      <path value="$PROJECT_DIR$/api/vendor/tinify/tinify" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
