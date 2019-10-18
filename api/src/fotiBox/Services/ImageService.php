@@ -1,14 +1,8 @@
 <?php
 
-
 namespace fotiBox\Services;
 
 use Psr\Container\ContainerInterface;
-use Tinify\AccountException;
-use Tinify\ClientException;
-use Tinify\ConnectionException;
-use Tinify\ServerException;
-use function Tinify\fromFile;
 
 class ImageService
 {
