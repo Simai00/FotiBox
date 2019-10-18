@@ -35,9 +35,8 @@ class Camera
             return $response->withJson($output);
         }
 
-        $imageId = $this->imageService->insertImageInDB($file);
-
         $this->imageService->generateImages($path, $file);
+        $imageId = $this->imageService->insertImageInDB($file);
 
         return $response->withJson($this->imageService->getOneImage($imageId));
     }
