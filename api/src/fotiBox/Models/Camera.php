@@ -50,7 +50,7 @@ class Camera
                 "status" => "online"
             );
         } else {
-            exec("gphoto2 -a", $output);
+            exec($this->rootPath . "src/fotiBox/cameraStatus.sh", $output);
         }
 
         return $response->withJson($output);
