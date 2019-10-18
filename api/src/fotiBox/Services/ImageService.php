@@ -24,10 +24,10 @@ class ImageService
         $this->logger = $container->get('logger');
     }
 
-    public function getImagePath(int $imageId)
+    public function getImageFileName(int $imageId, bool $getOriginalFileName = false)
     {
         $sql = <<< SQL
-            SELECT path from image where id = :imageId
+            SELECT path, bwFilter from image where id = :imageId
 SQL;
 
         $stmt = $this->db->prepare($sql);
@@ -35,6 +35,10 @@ SQL;
         $stmt->execute();
 
         $result = $stmt->fetch();
+        if ($result['bwFilter'] == 1 && !$getOriginalFileName) {
+            $fileName = preg_replace("/\.jpg$/", "", $result['path']);
+            return $fileName . "-BW.jpg";
+        }
         return $result['path'];
     }
 
@@ -76,6 +80,20 @@ SQL;
         return $stmt->fetch();
     }
 
+    public function isImageBW(String $imageId)
+    {
+        $sql = <<< SQL
+            SELECT bwFilter FROM image WHERE id= :id;
+
+SQL;
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $imageId);
+        $stmt->execute();
+
+        $result = $stmt->fetch();
+        return $result['bwFilter'] == 1;
+    }
+
     public function getImage(String $id, String $quality)
     {
         $path = $this->rootPath . $this->imagePath;
@@ -89,7 +107,7 @@ SQL;
             default:
                 $path .= "medium/";
         }
-        $path .= $this->getImagePath($id);
+        $path .= $this->getImageFileName($id);
         return file_get_contents($path);
     }
 
@@ -123,6 +141,54 @@ SQL;
         imagejpeg($previewImage, $this->rootPath . $this->imagePath . "preview/" . $fileName, 50);
         imagedestroy($mediumImage);
         imagedestroy($previewImage);
+    }
+
+    public function generateImagesWithFilter(String $imageId)
+    {
+        $imageFileName = $this->getImageFileName($imageId, true);
+        $path = $this->rootPath . $this->imagePath;
+        $this->generateImageWithFilter($path . "medium/", $imageFileName);
+        $this->generateImageWithFilter($path . "original/", $imageFileName);
+        $this->generateImageWithFilter($path . "preview/", $imageFileName);
+        if (file_exists($path . "original/" . $imageFileName)) {
+            $this->updateImageSetBW($imageId, true);
+        }
+    }
+
+    public function removeImagesWithFilter(String $imageId)
+    {
+        $imageFileName = $this->getImageFileName($imageId);
+        $path = $this->rootPath . $this->imagePath;
+        unlink($path . "medium/" . $imageFileName);
+        unlink($path . "original/" . $imageFileName);
+        unlink($path . "preview/" . $imageFileName);
+        if (!file_exists($path . "original/" . $imageFileName)) {
+            $this->updateImageSetBW($imageId, false);
+        }
+    }
+
+    private function generateImageWithFilter(String $path, String $fileName)
+    {
+        $image = imagecreatefromjpeg($path . $fileName);
+        imagefilter($image, IMG_FILTER_GRAYSCALE);
+        $newFileName = preg_replace("/\.jpg$/", "", $fileName);
+        imagejpeg($image, $path . $newFileName . "-BW.jpg");
+    }
+
+    private function updateImageSetBW(String $imageId, bool $bwFilter)
+    {
+        $sql = <<< SQL
+            UPDATE image set bwFilter = :bwFilter WHERE id= :id;
+
+SQL;
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $imageId);
+        if ($bwFilter) {
+            $stmt->bindValue(':bwFilter', 1);
+        } else {
+            $stmt->bindValue(':bwFilter', 0);
+        }
+        $stmt->execute();
     }
 }
 

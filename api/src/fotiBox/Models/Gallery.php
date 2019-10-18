@@ -40,4 +40,20 @@ class Gallery
         $images = $this->imageService->getAllImages();
         return $response->withJson($images);
     }
+
+    public function generateBwImages(Request $request, Response $response, $args): Response
+    {
+        if (!$this->imageService->isImageBW($args['id'])) {
+            $this->imageService->generateImagesWithFilter($args['id']);
+        }
+        return $response->withJson($this->imageService->getOneImage($args['id']));
+    }
+
+    public function removeBwImages(Request $request, Response $response, $args): Response
+    {
+        if ($this->imageService->isImageBW($args['id'])) {
+            $this->imageService->removeImagesWithFilter($args['id']);
+        }
+        return $response->withJson($this->imageService->getOneImage($args['id']));
+    }
 }
