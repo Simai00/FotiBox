@@ -38,13 +38,31 @@
         data: function () {
             return {
                 images: [],
-                apiUrl: process.env.VUE_APP_apiUrl
+                apiUrl: process.env.VUE_APP_apiUrl,
+                autoLoadImages: true
             };
+        },
+        methods: {
+            autoReload () {
+                setTimeout(() => {
+                    Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
+                        this.images = response.data;
+                    });
+                    if (this.autoLoadImages) {
+                        this.autoReload();
+                    }
+                }, 1000);
+            }
         },
         mounted () {
             Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
                 this.images = response.data;
             });
+            this.autoLoadImages = true;
+            this.autoReload();
+        },
+        beforeDestroy () {
+            this.autoLoadImages = false;
         }
     };
 </script>
