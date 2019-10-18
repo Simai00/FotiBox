@@ -51,6 +51,10 @@ class Camera
             );
         } else {
             exec($this->rootPath . "src/fotiBox/cameraStatus.sh", $output);
+            $output = array(
+                "name" => $output[0],
+                "status" => $output[1]
+            );
         }
 
         return $response->withJson($output);

@@ -1,2 +1,3 @@
 vendor/*
 log/app.log
+db.env

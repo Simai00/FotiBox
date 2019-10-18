@@ -42,6 +42,7 @@
         Update user + password
     cd /var/www/html
     sudo chown -R www-data: .
+    sudo chmod +x /var/www/html/FotiBox/api/src/fotiBox/cameraStatus.sh
     
     wget https://raw.githubusercontent.com/gonzalo/gphoto2-updater/master/gphoto2-updater.sh && chmod +x gphoto2-updater.sh && sudo ./gphoto2-updater.sh
     sudo gpasswd -a www-data plugdev
