@@ -44,10 +44,15 @@ class Camera
 
     public function status(Request $request, Response $response, $args): Response
     {
-        $infos = array(
-            "name" => "Sony Alpha 7ii",
-            "status" => "online"
-        );
-        return $response->withJson($infos);
+        if ($this->simulateCamera) {
+            $output = array(
+                "name" => "Kamera",
+                "status" => "online"
+            );
+        } else {
+            exec("gphoto2 -a", $output);
+        }
+
+        return $response->withJson($output);
     }
 }
