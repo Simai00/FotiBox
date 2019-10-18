@@ -17,6 +17,7 @@ cd FotiBox
 Create DB [fotiBox.sql](https://github.com/Simai00/FotiBox/blob/master/fotiBox.sql)
 
 Create the `.env` files from its corresponding example files:
+* [.env](https://github.com/Simai00/FotiBox/blob/master/api/.env.example) (Change APP_SIMULATE_CAMERA to true)
 * [db.env](https://github.com/Simai00/FotiBox/blob/master/api/db.env.example) (Change user and password if required)
 
 Install dependencies
