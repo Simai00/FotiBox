@@ -8,8 +8,6 @@ use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\WebProcessor;
 use Psr\Container\ContainerInterface;
-use function Tinify\setKey;
-use function Tinify\validate;
 
 $container = $app->getContainer();
 
@@ -29,6 +27,9 @@ $container['logger'] = function (ContainerInterface $container) {
 
     return $logger;
 };
+
+// SimulateCamera
+$container['simulateCamera'] = $container->get('settings')['app']['simulateCamera'];
 
 // Database
 $container['database'] = function (ContainerInterface $container) {

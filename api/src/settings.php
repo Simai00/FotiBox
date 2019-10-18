@@ -11,6 +11,11 @@ if (file_exists(ROOT . $db_dotenv_file)) {
     $db_dotenv = Dotenv::create(ROOT, $db_dotenv_file);
     $db_dotenv->load();
 }
+$dotenv_file = '.env';
+if (file_exists(ROOT . $dotenv_file)) {
+    $dotenv = Dotenv::create(ROOT, $dotenv_file);
+    $dotenv->load();
+}
 
 /**Returns the log level int depending on the log level name
  * Default is @param string $logLevel
@@ -35,6 +40,7 @@ return [
             'name' => 'FotiBox',
             'url' => 'http://localhost',
             'env' => 'dev',
+            'simulateCamera' => getenv('APP_SIMULATE_CAMERA') == "true"
         ],
         // Database settings
         'database' => [

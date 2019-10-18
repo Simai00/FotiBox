@@ -12,13 +12,14 @@ class Camera
     private $imageService;
     protected $rootPath = __DIR__ . "/../../../";
     protected $imagePath = "images";
-    protected $simulateCamera = false;
+    protected $simulateCamera;
     protected $testImage = "images/test.jpg";
 
     public function __construct(ContainerInterface $container)
     {
         $this->logger = $container->get('logger');
         $this->imageService = $container->get('imageService');
+        $this->simulateCamera = $container->get('simulateCamera');
     }
 
     public function captureImage(Request $request, Response $response, $args): Response
