@@ -41,18 +41,12 @@ class Gallery
         return $response->withJson($images);
     }
 
-    public function generateBwImages(Request $request, Response $response, $args): Response
-    {
-        if (!$this->imageService->isImageBW($args['id'])) {
-            $this->imageService->generateImagesWithFilter($args['id']);
-        }
-        return $response->withJson($this->imageService->getOneImage($args['id']));
-    }
-
-    public function removeBwImages(Request $request, Response $response, $args): Response
+    public function triggerBW(Request $request, Response $response, $args): Response
     {
         if ($this->imageService->isImageBW($args['id'])) {
             $this->imageService->removeImagesWithFilter($args['id']);
+        } else {
+            $this->imageService->generateImagesWithFilter($args['id']);
         }
         return $response->withJson($this->imageService->getOneImage($args['id']));
     }
