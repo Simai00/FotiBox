@@ -19,8 +19,7 @@ $app->group('/v1', function () use ($container) {
         $this->get('/{id}/original', Gallery::class . ':getOriginalImage');
         $this->get('/{id}/preview', Gallery::class . ':getPreviewImage');
         $this->get('/{id}/medium', Gallery::class . ':getMediumImage');
-        $this->get('/{id}/generateBW', Gallery::class . ':generateBwImages');
-        $this->get('/{id}/removeBW', Gallery::class . ':removeBwImages');
+        $this->get('/{id}/triggerBW', Gallery::class . ':triggerBW');
     });
     $this->get('/images', Gallery::class . ':getImages');
     $this->group('/camera', function () use ($container) {
