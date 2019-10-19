@@ -31,7 +31,7 @@
     <v-overlay
             :absolute="absolute"
             :opacity="opacity"
-            :value="overlay">
+            :value="overlay" >
       <v-btn
               icon
               @click="overlay = false"
