@@ -13,6 +13,7 @@
             :src="`${apiUrl}/v1/image/${image.id}/medium`"
             aspect-ratio="1"
             class="grey lighten-2"
+            @click="overlay = !overlay"
           >
             <template v-slot:placeholder>
               <v-row
@@ -27,6 +28,28 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-overlay
+            :absolute="absolute"
+            :opacity="opacity"
+            :value="overlay">
+      <v-btn
+              icon
+              @click="overlay = false"
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <div class="text-right">
+        <v-btn rounded color="success" dark
+               @click=""
+
+        >Filter aktivieren</v-btn>
+        <v-btn rounded color="error" dark
+               @click=""
+
+        >Filter deaktivieren</v-btn>
+      </div>
+
+    </v-overlay>
   </v-container>
 </template>
 
