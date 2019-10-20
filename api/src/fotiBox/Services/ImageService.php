@@ -36,11 +36,14 @@ SQL;
         return $result['path'];
     }
 
-    public function getAllImages()
+    public function getAllImages(bool $orderDESC)
     {
         $sql = <<< SQL
-            SELECT id, bwFilter, createdAt from image
+            SELECT id, bwFilter, createdAt from image order by createdAt
 SQL;
+        if ($orderDESC) {
+            $sql .= " DESC";
+        }
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute();

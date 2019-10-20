@@ -21,7 +21,7 @@ $app->group('/v1', function () use ($container) {
         $this->get('/{id}/medium', Gallery::class . ':getMediumImage');
         $this->get('/{id}/triggerBW', Gallery::class . ':triggerBW');
     });
-    $this->get('/images', Gallery::class . ':getImages');
+    $this->get('/images[/{order}]', Gallery::class . ':getImages');
     $this->group('/camera', function () use ($container) {
         $this->group('/capture', function () use ($container) {
             $this->get('/image', Camera::class . ':captureImage');

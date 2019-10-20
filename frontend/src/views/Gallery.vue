@@ -2,6 +2,11 @@
   <div>
     <v-container fluid>
       <v-row>
+        <v-col>
+          <v-switch :label="`Sortierig umchehre`" v-model="sortDesc"/>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col
           :key="image.id + '' + image.bwFilter"
           class="d-flex child-flex"
@@ -89,7 +94,8 @@
                 autoLoadImages: true,
                 dialogImage: {},
                 dialogShow: false,
-                loadingOverlay: false
+                loadingOverlay: false,
+                sortDesc: true
             };
         },
         methods: {
@@ -107,17 +113,24 @@
             autoReload () {
                 setTimeout(() => {
                     if (this.autoLoadImages && !this.dialogShow) {
-                        Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
+                        Vue.axios.get(this.getGetImagesUrl()).then((response) => {
                             this.images = response.data;
                         });
                     }
                     this.autoReload();
                 }, 1000);
+            },
+            getGetImagesUrl () {
+                if (this.sortDesc) {
+                    return `${process.env.VUE_APP_apiUrl}v1/images/desc`;
+                } else {
+                    return `${process.env.VUE_APP_apiUrl}v1/images`;
+                }
             }
 
         },
         mounted () {
-            Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
+            Vue.axios.get((this.getGetImagesUrl())).then((response) => {
                 this.images = response.data;
             });
             this.autoLoadImages = true;
