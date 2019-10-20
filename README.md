@@ -14,6 +14,11 @@ cd FotiBox
 * [Composer](https://getcomposer.org/) installed
 
 #### Startup
+Navigate to frontend path `FotiBox/api/`
+```bash
+cd api
+```
+
 Create DB [fotiBox.sql](https://github.com/Simai00/FotiBox/blob/master/fotiBox.sql)
 
 Create the `.env` files from its corresponding example files:
