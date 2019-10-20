@@ -55,7 +55,7 @@
           </v-btn>
           <v-spacer/>
           <v-btn @click="toggleBW()" color="primary" dark rounded>
-            Filter aktivieren
+            Schwarz-Wiss Filter
           </v-btn>
         </v-card-title>
         <v-img
@@ -118,7 +118,7 @@
                         });
                     }
                     this.autoReload();
-                }, 1000);
+                }, 2000);
             },
             getGetImagesUrl () {
                 if (this.sortDesc) {

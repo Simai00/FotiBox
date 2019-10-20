@@ -12,6 +12,7 @@
       max-width="80%"
       persistent
       v-model="takeAPictureDialog"
+      dark
     >
       <v-card>
         <v-card-title class="headline">
@@ -74,11 +75,13 @@
         },
         methods: {
             captureImage () {
-                this.loadingTakeAPicture = true;
-                Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/camera/capture/image`).then((response) => {
-                    this.loadingTakeAPicture = false;
-                    this.image = response.data;
-                });
+                if (this.cameraStatus === 'online') {
+                    this.loadingTakeAPicture = true;
+                    Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/camera/capture/image`).then((response) => {
+                        this.loadingTakeAPicture = false;
+                        this.image = response.data;
+                    });
+                }
             },
             openTakeAPictureDialog () {
                 this.updateCameraStatus();
@@ -92,6 +95,7 @@
             },
             startCountDown () {
                 if (!this.countDownStarted) {
+                    this.updateCameraStatus();
                     this.image = {};
                     this.countDown = 5;
                     this.countDownStarted = true;
