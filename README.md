@@ -14,7 +14,7 @@ cd FotiBox
 * [Composer](https://getcomposer.org/) installed
 
 #### Startup
-Navigate to frontend path `FotiBox/api/`
+Navigate to api path `FotiBox/api/`
 ```bash
 cd api
 ```
