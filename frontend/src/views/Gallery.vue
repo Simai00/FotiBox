@@ -1,81 +1,120 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col
-        :key="image.id"
-        class="d-flex child-flex"
-        cols="4"
-        v-for="image in images"
-      >
-        <v-card class="d-flex" flat tile>
-          <v-img
-            :lazy-src="`${apiUrl}/v1/image/${image.id}/preview`"
-            :src="`${apiUrl}/v1/image/${image.id}/medium`"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            @click="overlay = !overlay"
-          >
-            <template v-slot:placeholder>
-              <v-row
-                align="center"
-                class="fill-height ma-0"
-                justify="center"
-              >
-                <v-progress-circular color="grey lighten-5" indeterminate></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-overlay
-            :absolute="absolute"
-            :opacity="opacity"
-            :value="overlay" >
-      <v-btn
-              icon
-              @click="overlay = false"
-      >
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-      <div class="text-right">
-        <v-btn rounded color="success" dark
-               @click=""
-
-        >Filter aktivieren</v-btn>
-        <v-btn rounded color="error" dark
-               @click=""
-
-        >Filter deaktivieren</v-btn>
-      </div>
-
+  <div>
+    <v-container fluid>
+      <v-row>
+        <v-col
+          :key="image.id + '' + image.bwFilter"
+          class="d-flex child-flex"
+          cols="4"
+          v-for="image in images"
+        >
+          <v-card class="d-flex" flat tile>
+            <v-img
+              :lazy-src="`${apiUrl}v1/image/${image.id}/preview?${image.id + image.bwFilter}`"
+              :src="`${apiUrl}v1/image/${image.id}/medium?${image.id + image.bwFilter}`"
+              @click="showImageDialog(image)"
+              aspect-ratio="1"
+              class="grey lighten-2"
+            >
+              <template v-slot:placeholder>
+                <v-row
+                  align="center"
+                  class="fill-height ma-0"
+                  justify="center"
+                >
+                  <v-progress-circular color="grey lighten-5" indeterminate></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-overlay :value="loadingOverlay" :z-index="9999">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
-  </v-container>
+    <v-dialog
+      dark
+      max-width="80%"
+      v-model="dialogShow"
+    >
+      <v-card
+        class="mx-auto"
+      >
+        <v-card-title>
+          <v-btn
+            @click="dialogShow = false"
+            icon
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-spacer/>
+          <v-btn @click="toggleBW()" color="primary" dark rounded>
+            Filter aktivieren
+          </v-btn>
+        </v-card-title>
+        <v-img
+          :key="dialogImage.id + '' + dialogImage.bwFilter"
+          :lazy-src="`${apiUrl}v1/image/${dialogImage.id}/preview?${dialogImage.id + dialogImage.bwFilter}`"
+          :max-height="windowHeight - 200"
+          :src="`${apiUrl}v1/image/${dialogImage.id}/medium?${dialogImage.id + dialogImage.bwFilter}`"
+          contain
+        >
+          <template v-slot:placeholder>
+            <v-row
+              align="center"
+              class="fill-height ma-0"
+              justify="center"
+            >
+              <v-progress-circular color="grey lighten-5" indeterminate></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
     import Vue from 'vue';
+    import { vueWindowSizeMixin } from 'vue-window-size';
 
     export default {
         name: 'Gallery',
+        mixins: [vueWindowSizeMixin],
         data: function () {
             return {
                 images: [],
                 apiUrl: process.env.VUE_APP_apiUrl,
-                autoLoadImages: true
+                autoLoadImages: true,
+                dialogImage: {},
+                dialogShow: false,
+                loadingOverlay: false
             };
         },
         methods: {
+            toggleBW () {
+                this.loadingOverlay = true;
+                Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/image/${this.dialogImage.id}/triggerBW`).then((response) => {
+                    this.dialogImage = response.data;
+                    this.loadingOverlay = false;
+                });
+            },
+            showImageDialog (image) {
+                this.dialogImage = image;
+                this.dialogShow = true;
+            },
             autoReload () {
                 setTimeout(() => {
-                    Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
-                        this.images = response.data;
-                    });
-                    if (this.autoLoadImages) {
-                        this.autoReload();
+                    if (this.autoLoadImages && !this.dialogShow) {
+                        Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
+                            this.images = response.data;
+                        });
                     }
+                    this.autoReload();
                 }, 1000);
             }
+
         },
         mounted () {
             Vue.axios.get(`${process.env.VUE_APP_apiUrl}v1/images`).then((response) => {
@@ -87,7 +126,8 @@
         beforeDestroy () {
             this.autoLoadImages = false;
         }
-    };
+    }
+    ;
 </script>
 
 <style scoped>

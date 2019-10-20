@@ -39,7 +39,9 @@
         <v-img
           :lazy-src="`${apiUrl}/v1/image/${image.id}/preview`"
           :src="`${apiUrl}/v1/image/${image.id}/medium`"
+          :max-height="windowHeight / 3"
           v-if="image.id"
+          contain
         />
         <v-card-actions>
           <v-chip :color="getCameraStatusColor()" text-color="white" v-if="cameraStatus">
@@ -52,9 +54,11 @@
 </template>
 <script>
     import Vue from 'vue';
+    import { vueWindowSizeMixin } from 'vue-window-size';
 
     export default {
         name: 'TakeAPicture',
+        mixins: [vueWindowSizeMixin],
         data: function () {
             return {
                 apiUrl: process.env.VUE_APP_apiUrl,

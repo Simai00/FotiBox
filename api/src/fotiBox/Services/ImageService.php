@@ -39,7 +39,7 @@ SQL;
     public function getAllImages()
     {
         $sql = <<< SQL
-            SELECT id, createdAt from image
+            SELECT id, bwFilter, createdAt from image
 SQL;
 
         $stmt = $this->db->prepare($sql);
@@ -64,7 +64,7 @@ SQL;
     public function getOneImage(String $imageId)
     {
         $sql = <<< SQL
-            SELECT id, createdAt FROM image WHERE id= :id;
+            SELECT id, bwFilter, createdAt FROM image WHERE id= :id;
 
 SQL;
         $stmt = $this->db->prepare($sql);
