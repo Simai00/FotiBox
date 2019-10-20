@@ -7,11 +7,13 @@
 ### GET /image/_{id}_/triggerBW
     {
         "imageId": 1,
+        "bwFilter":"1",
         "createdAt": "2019-10-04 14:13:38"
     }
 ### GET /camera/capture/image
     {
         "imageId": 1,
+        "bwFilter":"0",
         "createdAt": "2019-10-04 14:13:38"
     }
 ### GET /camera/status
@@ -23,14 +25,17 @@
     [
         {
             "id": 1,
+            "bwFilter":"1",
             "createdAt": "2019-10-04 14:13:38"
         },
         {
             "id": 2,
+            "bwFilter":"0",
             "createdAt": "2019-10-04 14:13:38"
         },
         {
             "id": 3,
+            "bwFilter":"1"
             "createdAt": "2019-10-04 14:13:38"
         }
     ]
