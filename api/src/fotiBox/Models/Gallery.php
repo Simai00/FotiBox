@@ -37,12 +37,9 @@ class Gallery
 
     public function getImages(Request $request, Response $response, $args): Response
     {
-        switch ($request->getAttribute('order')) {
-            case "desc":
-                $orderDESC = true;
-                break;
-            default:
-                $orderDESC = false;
+        $orderDESC = false;
+        if ($request->getAttribute('order') == "desc") {
+            $orderDESC = true;
         }
         $images = $this->imageService->getAllImages($orderDESC);
         return $response->withJson($images);

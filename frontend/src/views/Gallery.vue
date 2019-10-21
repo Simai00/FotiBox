@@ -5,6 +5,11 @@
         <v-col>
           <v-switch :label="`Sortierig umchehre`" v-model="sortDesc"/>
         </v-col>
+        <v-col>
+          <v-alert type="error" v-if="errorCount > 0">
+            Es git momentan es Problemli mit dr Verbindig
+          </v-alert>
+        </v-col>
       </v-row>
       <v-row>
         <v-col
@@ -95,7 +100,8 @@
                 dialogImage: {},
                 dialogShow: false,
                 loadingOverlay: false,
-                sortDesc: true
+                sortDesc: true,
+                errorCount: 0
             };
         },
         methods: {
@@ -113,9 +119,14 @@
             autoReload () {
                 setTimeout(() => {
                     if (this.autoLoadImages && !this.dialogShow) {
-                        Vue.axios.get(this.getGetImagesUrl()).then((response) => {
-                            this.images = response.data;
-                        });
+                        Vue.axios.get(this.getGetImagesUrl())
+                            .then((response) => {
+                                this.images = response.data;
+                                delete this.error;
+                            })
+                            .catch(() => {
+                                this.errorCount++;
+                            });
                     }
                     this.autoReload();
                 }, 2000);
@@ -126,15 +137,31 @@
                 } else {
                     return `${process.env.VUE_APP_apiUrl}v1/images`;
                 }
+            },
+            sleep (milliseconds) {
+                return new Promise(resolve => setTimeout(resolve, milliseconds));
             }
-
         },
         mounted () {
-            Vue.axios.get((this.getGetImagesUrl())).then((response) => {
-                this.images = response.data;
-            });
+            Vue.axios.get((this.getGetImagesUrl()))
+                .then((response) => {
+                    this.images = response.data;
+                })
+                .catch(() => {
+                    this.errorCount++;
+                });
             this.autoLoadImages = true;
             this.autoReload();
+        },
+        watch: {
+            async errorCount (value) {
+                if (value === 5) {
+                    this.autoLoadImages = false;
+                    await this.sleep(10000);
+                    this.errorCount = 0;
+                    this.autoLoadImages = true;
+                }
+            }
         },
         beforeDestroy () {
             this.autoLoadImages = false;
