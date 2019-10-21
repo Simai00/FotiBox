@@ -14,5 +14,8 @@
     "psr-4": {
       "fotiBox\\": "src/fotiBox"
     }
+  },
+  "require-dev": {
+    "overtrue/phplint": "^1.1"
   }
 }
