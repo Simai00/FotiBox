@@ -129,7 +129,7 @@
                             });
                     }
                     this.autoReload();
-                }, 2000);
+                }, 4000);
             },
             getGetImagesUrl () {
                 if (this.sortDesc) {
